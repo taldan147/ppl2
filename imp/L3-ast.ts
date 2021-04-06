@@ -134,7 +134,7 @@ export const parseL3Program = (sexp: Sexp): Result<Program> =>
     makeFailure("Unexpected type " + sexp);
 
 const parseL3GoodProgram = (keyword: Sexp, body: Sexp[]): Result<Program> =>
-    keyword === "L3" && !isEmpty(body) ? bind(mapResult(parseL3Exp, body),
+    keyword === "L3" && !isEmpty(body) ? bind(mapResult(parseLetExp, body),
                                               (exps: Exp[]) => makeOk(makeProgram(exps))) :
     makeFailure("Program must be of the form (L3 <exp>+)");
 
