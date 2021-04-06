@@ -139,7 +139,7 @@ const parseL3GoodProgram = (keyword: Sexp, body: Sexp[]): Result<Program> =>
     makeFailure("Program must be of the form (L3 <exp>+)");
 
 // Exp -> <DefineExp> | <Cexp>
-export const pasrseL3Exp = (sexp: Sexp): Result<Exp> =>
+export const parseL3Exp = (sexp: Sexp): Result<Exp> =>
     isEmpty(sexp) ? makeFailure("Exp cannot be an empty list") :
     isArray(sexp) ? parseL3CompoundExp(first(sexp), rest(sexp)) :
     isToken(sexp) ? parseL3Atomic(sexp) :
