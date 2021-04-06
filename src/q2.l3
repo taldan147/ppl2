@@ -50,12 +50,36 @@
 
 (define payment
   (lambda (n coins-lst)
-        @TODO
+        (if(eq? n 0)
+            1
+            (if(empty? coins-lst)
+              0
+              (+ (payment(- n (car coins-lst))(cdr coins-lst))
+              (payment n (remove-all (car coins-lst) coins-lst))
+              )
+          )
+        )
   )
 )
+
+(define remove-all
+  (lambda (x lst)
+    (if (empty? lst)
+        lst
+        (if (eq? (car lst) x)
+            (remove-all x (cdr lst))
+            (cons (car lst) (remove-all x (cdr lst)))))))
+
                                
 (define compose-n
-  (lambda( f n)
-        @TODO
+  (lambda(f n)   
+    (if (eq? n 1)
+        (lambda (x)
+          (f x)
+        )
+        (lambda (x)
+         (f ((compose-n f (- n 1)) x)) 
+      )
+    )
   )
 )
