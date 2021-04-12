@@ -254,9 +254,9 @@ const parseClassExp = (fields: Sexp, methods: Sexp[]): Result<ClassExp> => {
     if (!isGoodBindings(methods)) {
         return makeFailure('Malformed bindings in "class" expression');
     }
-    const shit=unnest(methods)
-    const funcNames = map(b => b[0].toString(), shit);
-    const funcBodies =  mapResult(binding => parseL31CExp(binding), shit);
+    const unNestedMethods=unnest(methods)
+    const funcNames = map(b => b[0].toString(), unNestedMethods);
+    const funcBodies =  mapResult(binding => parseL31CExp(binding[1]), unNestedMethods);
     const bindingsFunc = bind(funcBodies, (vals: CExp[]) => makeOk(zipWith(makeBinding, funcNames, vals)));
 
     return safe2((vars: VarDecl[], bindings: Binding[]) => makeOk(makeClassExp(vars, bindings)))
@@ -317,7 +317,7 @@ const unparseLetExp = (le: LetExp) : string =>
     `(let (${map((b: Binding) => `(${b.var.var} ${unparseL31(b.val)})`, le.bindings).join(" ")}) ${unparseLExps(le.body)})`
 
 const unparseClassExp = (ce: ClassExp): string =>
-    `(class (${map((p: VarDecl) => p.var, ce.fields).join(" ")}) (${map((b: Binding) => `${unparseL31(b.val)}`, ce.methods).join(" ")}))`
+    `(class (${map((p: VarDecl) => p.var, ce.fields).join(" ")}) (${map((b: Binding) => `(${b.var.var} ${unparseL31(b.val)})`, ce.methods).join(" ")}))`
 
 export const unparseL31 = (exp: Program | Exp): string =>
     isBoolExp(exp) ? valueToString(exp.val) :
