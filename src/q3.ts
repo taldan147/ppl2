@@ -1,4 +1,4 @@
-import { isAppExp, isIfExp,CExp, ClassExp, ProcExp,  Exp, Program, makeProcExp, Binding, IfExp, makeIfExp,VarDecl, AppExp, makeAppExp, makePrimOp, makeStrExp, makeBoolExp, makeVarDecl, isAtomicExp, isLitExp, isProcExp, makeLetExp, LetExp, makeBinding, isCExp, isDefineExp, makeDefineExp, isClassExp, makeVarRef } from "./L31-ast";
+import { isAppExp, isIfExp,CExp, ClassExp, ProcExp,  Exp, Program, makeProcExp, Binding, IfExp, makeIfExp,VarDecl, AppExp, makeAppExp, makePrimOp, makeStrExp, makeBoolExp, makeVarDecl, isAtomicExp, isLitExp, isProcExp, makeLetExp, LetExp, makeBinding, isCExp, isDefineExp, makeDefineExp, isClassExp, makeVarRef, isProgram, makeProgram } from "./L31-ast";
 import { Result, makeFailure, makeOk } from "../shared/result";
 import { slice, map, zipWith } from "ramda";
 import { isLetExp } from "../imp/L3-ast";
@@ -20,9 +20,15 @@ Signature: l31ToL3(l31AST)
 Type: [Exp | Program] => Result<Exp | Program>
 */
 export const L31ToL3 = (exp: Exp | Program): Result<Exp | Program> =>
+    isProgram(exp) ? makeOk(makeProgram(map(rewriteAllClassExp, exp.exps))) :
     isCExp(exp) ? makeOk(rewriteAllClassCExp(exp)) :
-    isDefineExp(exp) ? makeOk(makeDefineExp(exp.var, rewriteAllClassCExp(exp.val))) :
+    isDefineExp(exp) ? makeOk(makeDefineExp((exp.var), rewriteAllClassCExp(exp.val))) :
     makeOk(exp);
+
+const rewriteAllClassExp = (exp : Exp) : Exp =>
+    isDefineExp(exp) ? makeDefineExp((exp.var), rewriteAllClassCExp(exp.val)) :
+    isCExp(exp) ? rewriteAllClassCExp(exp) :
+    exp;
 
 const rewriteAllClassCExp = (exp : CExp) : CExp =>
     isAtomicExp(exp) ? exp :
@@ -35,7 +41,7 @@ const rewriteAllClassCExp = (exp : CExp) : CExp =>
     exp; 
 
 const rewriteLetExp = (exp : Binding[]) : Binding[] =>
-   zipWith(makeBinding, map(b=>b.var.toString(), exp),  map(b=>rewriteAllClassCExp(b.val), exp))
+   zipWith(makeBinding, map(b=>b.var.var, exp),  map(b=>rewriteAllClassCExp(b.val), exp))
 
 
 /*

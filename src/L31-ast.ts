@@ -251,7 +251,7 @@ const parseClassExp = (fields: Sexp, methods: Sexp[]): Result<ClassExp> => {
     if (!isArray(fields) || !allT(isString, fields) ){
         return makeFailure('Invalid vars for classExp');
     }
-    if (!isGoodBindings(methods)) {
+    if (!isGoodBindings(methods)) { // check if its good 
         return makeFailure('Malformed bindings in "class" expression');
     }
     const unNestedMethods=unnest(methods)
