@@ -1,7 +1,8 @@
-import { isAppExp, isIfExp,CExp, ClassExp, ProcExp,  Exp, Program, makeProcExp, Binding, IfExp, makeIfExp,VarDecl, AppExp, makeAppExp, makePrimOp, makeStrExp, makeBoolExp, makeVarDecl, isAtomicExp, isLitExp, isProcExp, makeLetExp, LetExp, makeBinding, isCExp, isDefineExp, makeDefineExp, isClassExp, makeVarRef, isProgram, makeProgram } from "./L31-ast";
+import { isAppExp, isIfExp,CExp, ClassExp, ProcExp,  Exp, Program, makeProcExp, Binding, IfExp, makeIfExp,VarDecl, AppExp, makeAppExp, makePrimOp, makeStrExp, makeBoolExp, makeVarDecl, isAtomicExp, isLitExp, isProcExp, makeLetExp, LetExp, makeBinding, isCExp, isDefineExp, makeDefineExp, isClassExp, makeVarRef, isProgram, makeProgram, makeLitExp } from "./L31-ast";
 import { Result, makeFailure, makeOk } from "../shared/result";
 import { slice, map, zipWith } from "ramda";
 import { isLetExp } from "../imp/L3-ast";
+
 
 
 
@@ -59,4 +60,4 @@ Signature: makeTest(funcName)
 Type: VarDecl => AppExp
 */
 const makeTest = (funcName: VarDecl) : AppExp =>
-    makeAppExp(makePrimOp("eq?"),[ makeVarRef("msg"), makeVarRef(`'${funcName.var}`)])
+    makeAppExp(makePrimOp("eq?"),[ makeVarRef("msg"), makeLitExp(`'${funcName.var}`)])

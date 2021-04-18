@@ -19,6 +19,10 @@ describe('Q4 Tests', () => {
          expect(l2ToPythonResult(`(if (> x 3) 4 5)`)).to.deep.equal(makeOk(`(4 if (x > 3) else 5)`));
      });
 
+     it('parse "boolean?" expressions', () => {
+        expect(l2ToPythonResult(`boolean?`)).to.deep.equal(makeOk(`(lambda x : (type(x) == bool)`));
+    });
+
      it('parse "lambda" expressions', () => {
          expect(l2ToPythonResult(`(lambda (x y) (* x y))`)).to.deep.equal(makeOk(`(lambda x,y : (x * y))`));
          expect(l2ToPythonResult(`((lambda (x y) (* x y)) 3 4)`)).to.deep.equal(makeOk(`(lambda x,y : (x * y))(3,4)`));
