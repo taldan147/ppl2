@@ -34,7 +34,7 @@ const l2ToPythonApp = (ae: AppExp) : string =>
 const l2ToPythonPrimOp = (po : PrimOp) : string =>
     po.op === "=" || po.op === "eq?" ? "==" : 
     po.op === "boolean?" ? "(lambda x : (type(x) == bool)" :
-    po.op === "number?" ? "(lambda x : (type(x) == int)" :
+    po.op === "number?" ? "(lambda x : (type(x) == int or type(x) == float)" :
     po.op;
 
     
