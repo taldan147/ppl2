@@ -19,7 +19,7 @@ const l2ToPythonProc = (pe : ProcExp) : string =>
 const l2ToPythonApp = (ae: AppExp) : string => 
     isProcExp(ae.rator) ? `${l2ToPythonProc(ae.rator)}(${map(l2ToPythonExp, ae.rands).join(",")})`: 
     isPrimOp(ae.rator) && ae.rator.op === "not" ? `(${l2ToPythonExp(ae.rator)} ${l2ToPythonExp(ae.rands[0])})` :
-    isPrimOp(ae.rator) && (ae.rator.op === "boolean?" || ae.rator.op === "number?") ? `${l2ToPythonExp(ae.rator)}(${l2ToPythonExp(ae.rands[0])})`:
+    isPrimOp(ae.rator) && (ae.rator.op === "boolean?" || ae.rator.op === "number?") ? `(${l2ToPythonExp(ae.rator)}(${l2ToPythonExp(ae.rands[0])}))`:
     isVarDecl(ae.rator) || isVarRef(ae.rator) ? `${l2ToPythonExp(ae.rator)}(${map(l2ToPythonExp, ae.rands).join(",")})`:
     `(${map(l2ToPythonExp, ae.rands).join(` ${l2ToPythonExp(ae.rator)} `)})` ;
 

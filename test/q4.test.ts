@@ -20,7 +20,11 @@ describe('Q4 Tests', () => {
      });
 
      it('parse "boolean?" expressions', () => {
-        expect(l2ToPythonResult(`(boolean? x)`)).to.deep.equal(makeOk(`(lambda x : (type(x) == bool)(x)`));
+        expect(l2ToPythonResult(`(boolean? x)`)).to.deep.equal(makeOk(`((lambda x : (type(x) == bool)(x))`));
+    });
+
+    it('parse "and" expressions', () => {
+        expect(l2ToPythonResult(`(and x y)`)).to.deep.equal(makeOk(`(x and y)`));
     });
 
      it('parse "lambda" expressions', () => {
