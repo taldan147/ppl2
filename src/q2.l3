@@ -2,48 +2,33 @@
   (lambda(lst1 lst2)
       (if (empty? lst1)
         lst2
-        (cons (car lst1)(append (cdr lst1) lst2)))
-  )
-)
+        (cons (car lst1)(append (cdr lst1) lst2)))))
 
 (define empty?
   (lambda (lst1)
-    (eq? lst1 '())
-  )
-)
+    (eq? lst1 '())))
 
 (define reverse 
   (lambda (lst)
     (if (empty? lst)
       lst
-      (append (reverse (cdr lst)) (cons (car lst) (list)))
-    )
-  )
-)
+      (append (reverse (cdr lst)) (cons (car lst) (list))))))
 
 (define duplicate-helper
     (lambda(num ocurr)
       (if (eq? ocurr 0)
         '()
-        (cons num (duplicate-helper num (- ocurr 1)))
-      )
-    )
-)
+        (cons num (duplicate-helper num (- ocurr 1))))))
 
 (define rotate
   (lambda(lst)
-    (append (cdr lst)(cons (car lst)(list)))
-  )
-)
+    (append (cdr lst)(cons (car lst)(list)))))
 
 (define duplicate-items
    (lambda(lst dup-count)
       (if (empty? lst)
         lst
-        (append (duplicate-helper (car lst)(car dup-count)) (duplicate-items (cdr lst) (rotate dup-count)))
-      )
-   )
-)
+        (append (duplicate-helper (car lst)(car dup-count)) (duplicate-items (cdr lst) (rotate dup-count))))))
 
 
 
@@ -55,12 +40,7 @@
             (if(empty? coins-lst)
               0
               (+ (payment(- n (car coins-lst))(cdr coins-lst))
-              (payment n (remove-all (car coins-lst) coins-lst))
-              )
-          )
-        )
-  )
-)
+              (payment n (remove-all (car coins-lst) coins-lst)))))))
 
 (define remove-all
   (lambda (x lst)
@@ -78,8 +58,4 @@
           (f x)
         )
         (lambda (x)
-         (f ((compose-n f (- n 1)) x)) 
-      )
-    )
-  )
-)
+         (f ((compose-n f (- n 1)) x))))))

@@ -13,15 +13,6 @@ export const l2ToPython = (exp: Exp | Program): Result<string>  =>
     isExp(exp) ? makeOk(l2ToPythonExp(exp)):
     makeFailure("not a good program");
 
-// const l2ToPythonLExps = (les: Exp[]): string =>
-//     map(l2ToPythonExp, les).join(" ");
-
-// const unparseLitExp = (le: LitExp): string =>
-//     isEmptySExp(le.val) ? `'()` :
-//     isSymbolSExp(le.val) ? `'${valueToString(le.val)}` :
-//     isCompoundSExp(le.val) ? `'${valueToString(le.val)}` :
-//     `${le.val}`;
-
 const l2ToPythonProc = (pe : ProcExp) : string =>
     `(lambda ${map((p: VarDecl) => p.var, pe.args).join(",")} : ${l2ToPythonExp(pe.body[0])})`
 
@@ -36,9 +27,7 @@ const l2ToPythonPrimOp = (po : PrimOp) : string =>
     po.op === "boolean?" ? "(lambda x : (type(x) == bool)" :
     po.op === "number?" ? "(lambda x : (type(x) == int or type(x) == float)" :
     po.op;
-
     
-
 const l2ToPythonExp = (exp: Exp) : string =>
     isBoolExp(exp) ? valueToString(exp.val) :
     isNumExp(exp) ? valueToString(exp.val) :
