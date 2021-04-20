@@ -20,7 +20,7 @@ describe('Q4 Tests', () => {
      });
 
      it('parse "boolean?" expressions', () => {
-        expect(l2ToPythonResult(`boolean?`)).to.deep.equal(makeOk(`(lambda x : (type(x) == bool)`));
+        expect(l2ToPythonResult(`(boolean? x)`)).to.deep.equal(makeOk(`(lambda x : (type(x) == bool)(x)`));
     });
 
      it('parse "lambda" expressions', () => {
